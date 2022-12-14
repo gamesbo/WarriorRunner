@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - FxTemporaire
+  - Final
+  - Border
+  - Trap
+  - EndDoor
+  - FusionStart
+  - FusionEnd
+  - Coin
+  - PlayerL
+  - PlayerR
+  - Goku
+  - DragonBall
+  - MinusTwo
+  - PlusTen
+  - Vegeta
+  - Fall
+  - Goten
+  - Trunks
+  - Boss
+  - Fence
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - PostProcessing
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
