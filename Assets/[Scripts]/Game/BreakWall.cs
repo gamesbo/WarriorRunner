@@ -4,11 +4,11 @@ public class BreakWall : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Boss"))
-        {
-            Haptic.MediumTaptic();
-            Break();
-        }
+        //if (other.CompareTag("Boss"))
+        //{
+        //    Haptic.MediumTaptic();
+        //    Break();
+        //}
     }
     public void Break()
     {

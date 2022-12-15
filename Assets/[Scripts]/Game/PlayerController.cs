@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float speedstrech = 20f;
     public Transform MidPlayer;
     public float runSpeed = 10f;
-
+    public Transform spawnPos;
     [HideInInspector] public SplineFollower sF;
     [HideInInspector] public bool canMove = false;
     [HideInInspector] public bool isDead = false;
@@ -36,7 +36,12 @@ public class PlayerController : MonoBehaviour
     private void OnGameStart()
     {
         canMove=true;
-        transform.GetChild(0).GetComponentInChildren<Animator>().SetBool("Run", true);
+        transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Run");
+        transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk"+Random.Range(0,7));
+    }
+    public void Shoot()
+    {
+        Instantiate(Resources.Load("Fireball"),spawnPos.position , Quaternion.identity);
     }
     private void Update()
     {
@@ -76,16 +81,16 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
        
-        if (other.CompareTag("FusionEnd"))
-        {
-            float deger = 0f;
-            float y = sF.motion.offset.y;
-            DOTween.To(x =>
-            {
-                deger = x;
-                sF.motion.offset = new Vector2(0, y + deger);
-            }, deger, -4.4f, 0.3f);
-        }
+        //if (other.CompareTag("FusionEnd"))
+        //{
+        //    float deger = 0f;
+        //    float y = sF.motion.offset.y;
+        //    DOTween.To(x =>
+        //    {
+        //        deger = x;
+        //        sF.motion.offset = new Vector2(0, y + deger);
+        //    }, deger, -4.4f, 0.3f);
+        //}
     }
  
    
