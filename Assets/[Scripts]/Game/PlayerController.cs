@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool _Creative = false;
     public static int coinValue = 1;
     public float speedstrech = 20f;
     public Transform MidPlayer;
@@ -80,17 +81,43 @@ public class PlayerController : MonoBehaviour
         CharacterArmors();
         if (canMove == true)
         {
-            sF.follow = true;
-            if (!isSwerve)
+            if (!_Creative)
+            {
+                if (!isSwerve)
+                {
+                    Vector3 temp = MidPlayer.localPosition;
+                    temp.x += InputManager.instance.input.x * Time.deltaTime * speedstrech;
+                    temp.x = Mathf.Clamp(temp.x, -11f, 11f);
+                    MidPlayer.localPosition = temp;
+
+                    if (InputManager.instance.input.x > 0f && Input.GetMouseButton(0))
+                    {
+                        MidPlayer.transform.DOLocalRotate(new Vector3(0, 45, -0), 0.4f).SetEase(Ease.Linear);
+                    }
+                    else
+                    {
+                        MidPlayer.transform.DOLocalRotate(new Vector3(0, 0, 0f), 0.4f).SetEase(Ease.Linear);
+                    }
+                    if (InputManager.instance.input.x < 0f && Input.GetMouseButton(0))
+                    {
+                        MidPlayer.transform.DOLocalRotate(new Vector3(0, -30, 0), 0.4f).SetEase(Ease.Linear);
+                    }
+                    else
+                    {
+                        MidPlayer.transform.DOLocalRotate(new Vector3(0, 0, 0f), 0.4f).SetEase(Ease.Linear);
+                    }
+                }
+            }
+            else
             {
                 Vector3 temp = MidPlayer.localPosition;
-                temp.x += InputManager.instance.input.x * Time.deltaTime * speedstrech;
+                temp.x -= InputManager.instance.input.x * Time.deltaTime * speedstrech;
                 temp.x = Mathf.Clamp(temp.x, -11f, 11f);
                 MidPlayer.localPosition = temp;
 
                 if (InputManager.instance.input.x > 0f && Input.GetMouseButton(0))
                 {
-                    MidPlayer.transform.DOLocalRotate(new Vector3(0, 45, -0), 0.4f).SetEase(Ease.Linear);
+                    MidPlayer.transform.DOLocalRotate(new Vector3(0, -45, -0), 0.4f).SetEase(Ease.Linear);
                 }
                 else
                 {
@@ -98,13 +125,14 @@ public class PlayerController : MonoBehaviour
                 }
                 if (InputManager.instance.input.x < 0f && Input.GetMouseButton(0))
                 {
-                    MidPlayer.transform.DOLocalRotate(new Vector3(0, -30, 0), 0.4f).SetEase(Ease.Linear);
+                    MidPlayer.transform.DOLocalRotate(new Vector3(0, 30, 0), 0.4f).SetEase(Ease.Linear);
                 }
                 else
                 {
                     MidPlayer.transform.DOLocalRotate(new Vector3(0, 0, 0f), 0.4f).SetEase(Ease.Linear);
                 }
             }
+            sF.follow = true;
         }
         else
         {
