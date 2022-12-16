@@ -9,8 +9,9 @@ TagManager:
   - Border
   - Trap
   - EndDoor
-  - Coin
-  - DragonBall
+  - Ball
+  - Water
+  - Fire
   layers:
   - Default
   - TransparentFX

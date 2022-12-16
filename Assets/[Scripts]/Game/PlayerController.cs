@@ -12,11 +12,12 @@ public class PlayerController : MonoBehaviour
     public Transform MidPlayer;
     public float runSpeed = 10f;
     public Transform spawnPos;
+    public GameObject armor1, armor2, armor3, armor4;
     [HideInInspector] public SplineFollower sF;
     [HideInInspector] public bool canMove = false;
     [HideInInspector] public bool isDead = false;
     public bool isSwerve = false;
-
+    public float fireRate = 0.6f;
     public bool onLeft = false;
     #region Singleton
     public static PlayerController instance = null;
@@ -33,18 +34,50 @@ public class PlayerController : MonoBehaviour
         sF = GetComponent<SplineFollower>();
         LevelManager.instance.startEvent.AddListener(OnGameStart);
     }
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(fireRate);
+        if (CharController.instance.isWater)
+        {
+            Instantiate(Resources.Load("Waterball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
+        }
+        else if (CharController.instance.isFire)
+        {
+            Instantiate(Resources.Load("Fireball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
+        }
+        StartCoroutine(delay());
+    }
     private void OnGameStart()
     {
         canMove=true;
+        StartCoroutine(delay());
         transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Run");
-        transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk"+Random.Range(0,7));
+        transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk"+Random.Range(1,5));
     }
-    public void Shoot()
+    public int armorLevel = 0;
+    public void CharacterArmors()
     {
-        Instantiate(Resources.Load("Fireball"),spawnPos.position , Quaternion.identity);
+        switch (armorLevel)
+        {
+            case 0:
+                return;
+            case 1:
+                armor1.SetActive(true);
+                return;
+            case 2:
+                armor2.SetActive(true);
+                return;
+            case 3:
+                armor3.SetActive(true);
+                return;
+            case 4:
+                armor4.SetActive(true);
+                return;
+        }
     }
     private void Update()
     {
+        CharacterArmors();
         if (canMove == true)
         {
             sF.follow = true;
@@ -80,17 +113,11 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-       
-        //if (other.CompareTag("FusionEnd"))
-        //{
-        //    float deger = 0f;
-        //    float y = sF.motion.offset.y;
-        //    DOTween.To(x =>
-        //    {
-        //        deger = x;
-        //        sF.motion.offset = new Vector2(0, y + deger);
-        //    }, deger, -4.4f, 0.3f);
-        //}
+        
+        if (other.CompareTag("Ball"))
+        {
+            Destroy(other.gameObject);
+        }
     }
  
    

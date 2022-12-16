@@ -15,6 +15,13 @@ public class AnimationEvent : MonoBehaviour
     }
     public void Shoot()
     {
-        Instantiate(Resources.Load("Fireball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
+        //if (CharController.instance.isWater)
+        //{
+        //    Instantiate(Resources.Load("Waterball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
+        //}
+        //else if (CharController.instance.isFire)
+        //{
+        //    Instantiate(Resources.Load("Fireball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
+        //}
     }
 }
