@@ -157,6 +157,16 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+        else if (other.CompareTag("Trap"))
+        {
+            StartCoroutine(Delay());
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Trap");
+            IEnumerator Delay()
+            {
+                yield return new WaitForSeconds(0.75f);
+                transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            }
+        }
     }
  
    
