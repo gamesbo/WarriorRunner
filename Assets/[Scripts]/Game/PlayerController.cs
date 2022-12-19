@@ -38,14 +38,16 @@ public class PlayerController : MonoBehaviour
     IEnumerator delay()
     {
         yield return new WaitForSeconds(fireRate);
-        if (CharController.instance.isWater)
-        {
-            Instantiate(Resources.Load("Waterball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
-        }
-        else if (CharController.instance.isFire)
-        {
-            Instantiate(Resources.Load("Fireball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
-        }
+        transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Fire");
+
+        //if (CharController.instance.isWater)
+        //{
+        //    Instantiate(Resources.Load("Waterball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
+        //}
+        //else if (CharController.instance.isFire)
+        //{
+        //    Instantiate(Resources.Load("Fireball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
+        //}
         StartCoroutine(delay());
     }
     private void OnGameStart()

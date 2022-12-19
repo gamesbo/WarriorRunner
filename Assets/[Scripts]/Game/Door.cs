@@ -8,7 +8,7 @@ public class Door : MonoBehaviour
     public Image doorImage;
     public bool isWater = false;
     public bool isFire = false;
-    private float skF = 2f;
+    private float skF = 3.5f;
     void Update()
     {
         if (value <= 0)
@@ -32,9 +32,9 @@ public class Door : MonoBehaviour
                 other.GetComponent<CharController>().isFire = false;
                 other.GetComponent<CharController>().levelUP.Play();
                 other.GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
-                skF += 0.5f;
+                skF += 0.1f;
                 other.GetComponentInChildren<Animator>().SetFloat("SK1", skF);
-                PlayerController.instance.fireRate -= 0.06f;
+                PlayerController.instance.fireRate -= 0.03f;
                 PlayerController.instance.armorLevel ++;
             }
             else if (isFire)
@@ -43,9 +43,9 @@ public class Door : MonoBehaviour
                 other.GetComponent<CharController>().isWater = false;
                 other.GetComponent<CharController>().levelUP.Play();
                 other.GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
-                skF += 0.5f;
+                skF += 0.1f;
                 other.GetComponentInChildren<Animator>().SetFloat("SK1", skF);
-                PlayerController.instance.fireRate -= 0.06f;
+                PlayerController.instance.fireRate -= 0.03f;
                 PlayerController.instance.armorLevel++;
             }
         }
