@@ -13,12 +13,12 @@ public class Door : MonoBehaviour
     {
         if (value <= 0)
         {
-            doorImage.color = new Color(1, 0, 0, 1);
+            doorImage.color = new Color(1, 0.3f, 0.25f, 1);
             text.text = value.ToString();
         }
         else
         {
-            doorImage.color = new Color(0, 1, 0, 1);
+            doorImage.color = new Color(0.2f, 0.95f, 0.31f, 1);
             text.text = "+" + value.ToString();
         }
     }
@@ -36,6 +36,7 @@ public class Door : MonoBehaviour
                 other.GetComponentInChildren<Animator>().SetFloat("SK1", skF);
                 PlayerController.instance.fireRate -= 0.03f;
                 PlayerController.instance.armorLevel ++;
+                PlayerController.instance.hair.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.hairBlue;
             }
             else if (isFire)
             {
@@ -47,6 +48,8 @@ public class Door : MonoBehaviour
                 other.GetComponentInChildren<Animator>().SetFloat("SK1", skF);
                 PlayerController.instance.fireRate -= 0.03f;
                 PlayerController.instance.armorLevel++;
+                PlayerController.instance.hair.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.hairRed;
+
             }
         }
     }

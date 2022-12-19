@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public float speedstrech = 20f;
     public Transform MidPlayer;
     public float runSpeed = 10f;
+    public Material hairRed;
+    public Material hairBlue;
+    public GameObject hair;
     public Transform spawnPos;
     public GameObject armor1, armor2, armor3, armor4;
     [HideInInspector] public SplineFollower sF;
@@ -38,7 +41,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator delay()
     {
         yield return new WaitForSeconds(fireRate);
-        transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Fire");
+        //transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Fire");
 
         //if (CharController.instance.isWater)
         //{

@@ -14,8 +14,8 @@ public class ball : MonoBehaviour
         if (door)
         {
             door.value++;
-            Destroy(transform.GetChild(1).gameObject,1.2f);
-            transform.GetChild(1).parent = null;
+            //Destroy(transform.GetChild(1).gameObject,1.2f);
+            //transform.GetChild(1).parent = null;
             Destroy(gameObject);
 
             if (tw != null) return;
