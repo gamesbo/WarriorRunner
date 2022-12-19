@@ -23,6 +23,9 @@ public class ball : MonoBehaviour
             {
                 door.text.transform.DOScale(new Vector3(2.1f, 0.6f, 0.85f), .2f);
             });
+           GameObject plus = Instantiate(Resources.Load("plus"),new Vector3(door.transform.position.x + Random.Range(-3f,3f), door.transform.position.y + 1f
+               , door.transform.position.z +1f), Quaternion.identity)as GameObject;
+            Destroy(plus.gameObject, 1.5f);
         }
     }
 
