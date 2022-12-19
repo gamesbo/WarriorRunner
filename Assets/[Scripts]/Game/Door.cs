@@ -36,7 +36,15 @@ public class Door : MonoBehaviour
                 other.GetComponentInChildren<Animator>().SetFloat("SK1", skF);
                 PlayerController.instance.fireRate -= 0.03f;
                 PlayerController.instance.armorLevel ++;
-                PlayerController.instance.hair.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.hairBlue;
+                PlayerController.instance.hair.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.hairblue;
+                PlayerController.instance.armor1.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.yelekblue;
+                PlayerController.instance.armor2.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.omuzlukblue;
+                PlayerController.instance.armor3.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.ayakkabýblue;
+                PlayerController.instance.armor3.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.ayakkabýblue;
+                PlayerController.instance.armor4.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.pelerinblue;
+                PlayerController.instance.body.GetComponent<SkinnedMeshRenderer>().materials[0].color = new Color(0.195f, 0.3845834f, 0.65f, 1);
+                PlayerController.instance.body.GetComponent<SkinnedMeshRenderer>().materials[1].color = new Color(0.16f, 0.5866666f, 0.8f, 1);
+                PlayerController.instance.body.GetComponent<SkinnedMeshRenderer>().materials[2].color = new Color(0.33f, 0.646875f, 0.75f, 1);
             }
             else if (isFire)
             {
@@ -49,6 +57,14 @@ public class Door : MonoBehaviour
                 PlayerController.instance.fireRate -= 0.03f;
                 PlayerController.instance.armorLevel++;
                 PlayerController.instance.hair.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.hairRed;
+                PlayerController.instance.armor1.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.yelekred;
+                PlayerController.instance.armor2.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.omuzlukred;
+                PlayerController.instance.armor3.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.ayakkabired;
+                PlayerController.instance.armor3.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.ayakkabired;
+                PlayerController.instance.armor4.GetComponent<SkinnedMeshRenderer>().material = PlayerController.instance.pelerinred;
+                PlayerController.instance.body.GetComponent<SkinnedMeshRenderer>().materials[0].color = new Color(0.6509804f, 0.1333333f, 0.1607843f, 1);
+                PlayerController.instance.body.GetComponent<SkinnedMeshRenderer>().materials[1].color = new Color(0.7f, 0.245f, 0.245f, 1);
+                PlayerController.instance.body.GetComponent<SkinnedMeshRenderer>().materials[2].color = new Color(0.65f, 0.2925f, 0.2925f, 1);
 
             }
         }

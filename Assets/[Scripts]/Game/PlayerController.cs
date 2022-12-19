@@ -12,9 +12,15 @@ public class PlayerController : MonoBehaviour
     public float speedstrech = 20f;
     public Transform MidPlayer;
     public float runSpeed = 10f;
-    public Material hairRed;
-    public Material hairBlue;
+    public Material hairRed,hairblue;
+    public Material ayakkabired,ayakkabýblue;
+    public Material omuzlukred,omuzlukblue;
+    public Material pantolonred,pantolonblue;
+    public Material pelerinred,pelerinblue;
+    public Material tshirtred,tshirtblue;
+    public Material yelekred, yelekblue;
     public GameObject hair;
+    public GameObject body;
     public Transform spawnPos;
     public GameObject armor1, armor2, armor3, armor4;
     [HideInInspector] public SplineFollower sF;
