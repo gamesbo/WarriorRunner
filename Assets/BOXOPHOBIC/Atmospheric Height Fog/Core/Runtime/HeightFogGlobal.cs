@@ -193,7 +193,6 @@ namespace AtmosphericHeightFog
         {
             if (mainCamera == null)
             {
-                Debug.Log("[Atmospheric Height Fog] " + "Make sure you set scene camera tag to Main Camera for the fog to work!");
                 return;
             }
 

@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
             transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
             yield return new WaitForSeconds(2);
             transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
             stopattack = true;
             WinLoseController.instance.Win();
             fusionParticle.SetActive(true);
@@ -242,7 +242,14 @@ public class PlayerController : MonoBehaviour
                 transform.GetChild(0).GetComponentInChildren<Animator>().SetFloat("SK1", 3f);
                 canMove = false;
                 StartCoroutine(BossAttack());
-                CameraManager.instance.offsetvector = new Vector3(40f, 50f, -15f);
+                if (_Creative)
+                {
+                    CameraManager.instance.offsetvector = new Vector3(62.5f, 70f, -32.5f);
+                }
+                else
+                {
+                    CameraManager.instance.offsetvector = new Vector3(40f, 50f, -15f);
+                }
                 CameraManager.instance.transform.DORotate(new Vector3(40f, -45f, 0), 0.5f);
                 transform.GetChild(0).GetComponent<Animator>().SetBool("idle", true);
                 UIManager.instance.gamePanel.ibre.parent.gameObject.SetActive(true);
