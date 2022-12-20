@@ -12,6 +12,8 @@ TagManager:
   - Ball
   - Water
   - Fire
+  - Fence
+  - Boss
   layers:
   - Default
   - TransparentFX

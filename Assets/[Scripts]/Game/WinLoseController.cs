@@ -40,9 +40,12 @@ public class WinLoseController : MonoBehaviour
     }
     IEnumerator WinDelay()
     {       
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         LevelManager.instance.Success();
         Haptic.NotificationSuccessTaptic();
+        PlayerController.instance.Boss.GetComponent<Animator>().SetTrigger("Defeat");
+        PlayerController.instance.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Victory");
+
     }
     public void Lose()
     {
@@ -50,7 +53,11 @@ public class WinLoseController : MonoBehaviour
     }
     IEnumerator LoseDelay()
     {
+        yield return new WaitForSeconds(0.5f);
+
         LevelManager.instance.Fail();
+        PlayerController.instance.Boss.GetComponent<Animator>().SetTrigger("Victory");
+        PlayerController.instance.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Defeat");
         Haptic.NotificationErrorTaptic();
         yield return new WaitForSeconds(0.1f);
     }

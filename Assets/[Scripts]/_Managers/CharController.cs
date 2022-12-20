@@ -16,10 +16,4 @@ public class CharController : MonoBehaviour
         }
     }
     #endregion
-    void Start()
-    {
-    }
-    void Update()
-    {
-    }
 }

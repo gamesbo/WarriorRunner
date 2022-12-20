@@ -15,7 +15,6 @@ namespace EKTemplate
         private Text moneyText { get { return coinPanelRect.GetChild(1).GetChild(0).GetComponent<Text>(); } }
         private Button restartButton { get { return restartButtonRect.GetComponent<Button>(); } }
         public RectTransform ibre;
-        public RectTransform SlotBaribre;
         private void Update()
         {
             moneyText.text = GameManager.instance.money.ToString();

@@ -14,8 +14,6 @@ public class ball : MonoBehaviour
         if (door)
         {
             door.value++;
-            //Destroy(transform.GetChild(1).gameObject,1.2f);
-            //transform.GetChild(1).parent = null;
             Destroy(gameObject);
 
             if (tw != null) return;
@@ -26,6 +24,14 @@ public class ball : MonoBehaviour
            GameObject plus = Instantiate(Resources.Load("plus"),new Vector3(door.transform.position.x + Random.Range(-3f,3f), door.transform.position.y + 1f
                , door.transform.position.z +1f), Quaternion.identity)as GameObject;
             Destroy(plus.gameObject, 1.5f);
+        }
+        else if (other.CompareTag("Boss"))
+        {
+            if (!PlayerController.instance.attack)
+            {
+                other.GetComponent<Animator>().SetTrigger("Hasar");
+            }
+            Destroy(gameObject);
         }
     }
 

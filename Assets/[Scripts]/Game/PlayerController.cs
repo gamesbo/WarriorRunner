@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Dreamteck.Splines;
 using EKTemplate;
 using DG.Tweening;
-
 public class PlayerController : MonoBehaviour
 {
     public bool _Creative = false;
@@ -29,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public bool isSwerve = false;
     public float fireRate = 0.6f;
     public bool onLeft = false;
+    public GameObject fusionParticle;
     #region Singleton
     public static PlayerController instance = null;
     private void Awake()
@@ -47,16 +47,6 @@ public class PlayerController : MonoBehaviour
     IEnumerator delay()
     {
         yield return new WaitForSeconds(fireRate);
-        //transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Fire");
-
-        //if (CharController.instance.isWater)
-        //{
-        //    Instantiate(Resources.Load("Waterball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
-        //}
-        //else if (CharController.instance.isFire)
-        //{
-        //    Instantiate(Resources.Load("Fireball"), PlayerController.instance.spawnPos.position, Quaternion.identity);
-        //}
         StartCoroutine(delay());
     }
     private void OnGameStart()
@@ -87,6 +77,11 @@ public class PlayerController : MonoBehaviour
                 return;
         }
     }
+
+    public bool onTapTap = false;
+    public GameObject Boss;
+    public bool firstTap = false;
+    private bool secondTap = false;
     private void Update()
     {
         CharacterArmors();
@@ -149,10 +144,80 @@ public class PlayerController : MonoBehaviour
         {
             sF.follow = false;
         }
+        if (onTapTap)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                UIManager.instance.gamePanel.ibre.anchoredPosition += Vector2.right * 32f;
+                if (!secondTap)
+                {
+                    firstTap = true;
+                    secondTap = true;
+                }
+            }
+            if (firstTap)
+            {
+                ParticleSystem[] particle = Boss.GetComponentsInChildren<ParticleSystem>();
+                for (int i = 0; i < particle.Length; i++)
+                {
+                    particle[i].Play();
+                }
+                ParticleSystem[] particles = transform.GetComponentsInChildren<ParticleSystem>();
+                for (int i = 0; i < particles.Length; i++)
+                {
+                    particles[i].Play();
+                }
+
+                firstTap = false;
+            }
+
+            UIManager.instance.gamePanel.ibre.anchoredPosition -= Vector2.right * Time.deltaTime * 90f;
+
+            if (UIManager.instance.gamePanel.ibre.anchoredPosition.x >= 240f) Fight();
+            else if (UIManager.instance.gamePanel.ibre.anchoredPosition.x <= -240f) Fail();
+        }
+    }
+    public void Fail()
+    {
+        onTapTap = false;
+        stopattack = true;
+        WinLoseController.instance.Lose();
+        UIManager.instance.gamePanel.ibre.parent.gameObject.SetActive(false);
+    }
+    public void Fight()
+    {
+        onTapTap = false;
+
+        UIManager.instance.gamePanel.ibre.parent.gameObject.SetActive(false);
+        StartCoroutine(Delay());
+        IEnumerator Delay()
+        {
+            attack = true;
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetFloat("SK1", 3f);
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            yield return new WaitForSeconds(2f);
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            yield return new WaitForSeconds(2);
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            yield return new WaitForSeconds(2);
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            yield return new WaitForSeconds(3f);
+            stopattack = true;
+            WinLoseController.instance.Win();
+            fusionParticle.SetActive(true);
+        }
+    }
+    private bool stopattack = false;
+    public bool attack = false;
+    IEnumerator BossAttack()
+    {
+        yield return new WaitForSeconds(2f);
+        if (stopattack) yield break;
+        Boss.GetComponent<Animator>().SetTrigger("Attack" + Random.Range(0, 4));
+        StartCoroutine(BossAttack());
     }
     private void OnTriggerEnter(Collider other)
     {
-        
         if (other.CompareTag("Ball"))
         {
             Destroy(other.gameObject);
@@ -167,8 +232,23 @@ public class PlayerController : MonoBehaviour
                 transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
             }
         }
+        else if (other.CompareTag("Final"))
+        {
+            StartCoroutine(Delay());
+            IEnumerator Delay()
+            {
+                transform.DOMoveX(0, 0.5f).SetEase(Ease.Linear);
+                yield return new WaitForSeconds(0.7f);
+                transform.GetChild(0).GetComponentInChildren<Animator>().SetFloat("SK1", 3f);
+                canMove = false;
+                StartCoroutine(BossAttack());
+                CameraManager.instance.offsetvector = new Vector3(40f, 50f, -15f);
+                CameraManager.instance.transform.DORotate(new Vector3(40f, -45f, 0), 0.5f);
+                transform.GetChild(0).GetComponent<Animator>().SetBool("idle", true);
+                UIManager.instance.gamePanel.ibre.parent.gameObject.SetActive(true);
+                onTapTap = true;
+                attack = true;
+            }
+        }
     }
- 
-   
-    
 }
