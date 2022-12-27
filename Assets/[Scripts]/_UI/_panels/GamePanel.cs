@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
+using TMPro;
 namespace EKTemplate
 {
     public class GamePanel : Panel
@@ -10,8 +10,10 @@ namespace EKTemplate
         public RectTransform restartButtonRect;
 
         [HideInInspector] int inGameCurrency;
-
+        public GameObject firebar;
         private Tween tween;
+        public TextMeshProUGUI textChar;
+        public GameObject img;
         private Text moneyText { get { return coinPanelRect.GetChild(1).GetChild(0).GetComponent<Text>(); } }
         private Button restartButton { get { return restartButtonRect.GetComponent<Button>(); } }
         public RectTransform ibre;

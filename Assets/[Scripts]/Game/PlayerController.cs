@@ -54,26 +54,94 @@ public class PlayerController : MonoBehaviour
         canMove=true;
         StartCoroutine(delay());
         transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Run");
-        transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk"+Random.Range(1,5));
+        transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk"+Random.Range(1,7));
     }
     public int armorLevel = 0;
+    public int charnameLevel = 0;
     public void CharacterArmors()
     {
         switch (armorLevel)
         {
             case 0:
+                armor1.SetActive(false);
+                armor2.SetActive(false);
+                armor3.SetActive(false);
+                armor4.SetActive(false);
+
                 return;
             case 1:
                 armor1.SetActive(true);
+                armor2.SetActive(false);
+                armor3.SetActive(false);
+                armor4.SetActive(false);
+
                 return;
             case 2:
                 armor2.SetActive(true);
+                armor1.SetActive(true);
+                armor3.SetActive(false);
+                armor4.SetActive(false);
+
                 return;
             case 3:
+                armor1.SetActive(true);
+                armor2.SetActive(true);
                 armor3.SetActive(true);
+                armor4.SetActive(false);
+
                 return;
             case 4:
+                armor1.SetActive(true);
+                armor2.SetActive(true);
+                armor3.SetActive(true);
                 armor4.SetActive(true);
+                return;
+        }
+    }
+
+    public void CharacterNames()
+    {
+        switch (charnameLevel)
+        {
+            case 0:
+                UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
+
+                UIManager.instance.gamePanel.textChar.text = "Warrior".ToString();
+                return;
+            case 1:
+                UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
+
+                UIManager.instance.gamePanel.textChar.text = "Fighter".ToString();
+
+                return;
+            case 2:
+                UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
+
+                UIManager.instance.gamePanel.textChar.text = "Ninja".ToString();
+
+                return;
+            case 3:
+                UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
+
+                UIManager.instance.gamePanel.textChar.text = "Supreme".ToString();
+
+                return;
+            case 4:
+                UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
+
+                UIManager.instance.gamePanel.textChar.text = "Combatant".ToString();
+
+                return;
+            case 5:
+                UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
+
+                UIManager.instance.gamePanel.textChar.text = "Sergant".ToString();
+
+                return;
+            case 6:
+                UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
+
+                UIManager.instance.gamePanel.textChar.text = "Martial".ToString();
                 return;
         }
     }
@@ -84,6 +152,13 @@ public class PlayerController : MonoBehaviour
     private bool secondTap = false;
     private void Update()
     {
+        if(UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value >= 1)
+        {
+            charnameLevel++;
+            CharacterNames();
+
+        }
+
         CharacterArmors();
         if (canMove == true)
         {
@@ -167,7 +242,8 @@ public class PlayerController : MonoBehaviour
                 {
                     particles[i].Play();
                 }
-
+                UIManager.instance.gamePanel.firebar.SetActive(false);
+                UIManager.instance.gamePanel.img.SetActive(false);
                 firstTap = false;
             }
 
@@ -194,13 +270,13 @@ public class PlayerController : MonoBehaviour
         {
             attack = true;
             transform.GetChild(0).GetComponentInChildren<Animator>().SetFloat("SK1", 3f);
-            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 7));
             yield return new WaitForSeconds(2f);
-            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 7));
             yield return new WaitForSeconds(2);
-            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 7));
             yield return new WaitForSeconds(2);
-            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 5));
+            transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Sk" + Random.Range(1, 7));
             yield return new WaitForSeconds(2f);
             stopattack = true;
             WinLoseController.instance.Win();
@@ -220,7 +296,10 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
+            fireRate -= 0.035f;
+            UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value += 0.15f;
             Destroy(other.gameObject);
+
         }
         else if (other.CompareTag("Trap"))
         {
@@ -256,6 +335,13 @@ public class PlayerController : MonoBehaviour
                 onTapTap = true;
                 attack = true;
             }
+        }
+        else if (other.CompareTag("WaterBall"))
+        {
+            fireRate += 0.02f;
+            Destroy(other.gameObject);
+            UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value -= 0.15f;
+
         }
     }
 }
