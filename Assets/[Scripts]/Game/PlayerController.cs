@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Dreamteck.Splines;
 using EKTemplate;
 using DG.Tweening;
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public bool _Creative = false;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public float fireRate = 0.6f;
     public bool onLeft = false;
     public GameObject fusionParticle;
+    public Sprite[] barColors;
     #region Singleton
     public static PlayerController instance = null;
     private void Awake()
@@ -98,67 +100,91 @@ public class PlayerController : MonoBehaviour
                 return;
         }
     }
-
+    public void ChangeScaleBarText(int _i)
+    {
+        UIManager.instance.gamePanel.textChar.transform.DOScale(1.5f, .3f).OnComplete(() =>
+        {
+            UIManager.instance.gamePanel.textChar.transform.DOScale(Vector3.one, .3f);
+        });
+        UIManager.instance.gamePanel.barColor.sprite = barColors[_i];
+    }
     public void CharacterNames()
     {
         switch (charnameLevel)
         {
             case 0:
                 UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
-
                 UIManager.instance.gamePanel.textChar.text = "Warrior".ToString();
+                StartCoroutine(BarDelay2(0));
+
                 return;
             case 1:
                 UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
-
                 UIManager.instance.gamePanel.textChar.text = "Fighter".ToString();
+                StartCoroutine(BarDelay2(1));
 
                 return;
             case 2:
                 UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
-
                 UIManager.instance.gamePanel.textChar.text = "Ninja".ToString();
+                StartCoroutine(BarDelay2(2));
 
                 return;
             case 3:
                 UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
-
                 UIManager.instance.gamePanel.textChar.text = "Supreme".ToString();
+                StartCoroutine(BarDelay2(3));
 
                 return;
             case 4:
                 UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
-
                 UIManager.instance.gamePanel.textChar.text = "Combatant".ToString();
+                StartCoroutine(BarDelay2(4));
 
                 return;
             case 5:
                 UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
 
                 UIManager.instance.gamePanel.textChar.text = "Sergant".ToString();
+                StartCoroutine(BarDelay2(5));
 
                 return;
             case 6:
                 UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value = 0;
-
                 UIManager.instance.gamePanel.textChar.text = "Martial".ToString();
+                StartCoroutine(BarDelay2(6));
                 return;
         }
     }
+    IEnumerator BarDelay2(int _i)
+    {
+        yield return new WaitForSeconds(0.35f);
+        ChangeScaleBarText(_i);
 
+    }
     public bool onTapTap = false;
     public GameObject Boss;
     public bool firstTap = false;
     private bool secondTap = false;
+
+    IEnumerator BarDelay()
+    {
+        yield return new WaitForSeconds(1);
+        charnameLevel++;
+        CharacterNames();
+        checkBar = false;
+    }
+    bool checkBar = false;
     private void Update()
     {
-        if(UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value >= 1)
+        if (!checkBar)
         {
-            charnameLevel++;
-            CharacterNames();
-
+            if(UIManager.instance.gamePanel.firebar.GetComponent<ProgressBarPro>().Value >= 1)
+            {
+                StartCoroutine(BarDelay());
+                checkBar = true;
+            }
         }
-
         CharacterArmors();
         if (canMove == true)
         {
@@ -242,8 +268,7 @@ public class PlayerController : MonoBehaviour
                 {
                     particles[i].Play();
                 }
-                UIManager.instance.gamePanel.firebar.SetActive(false);
-                UIManager.instance.gamePanel.img.SetActive(false);
+              
                 firstTap = false;
             }
 
@@ -316,6 +341,8 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(Delay());
             IEnumerator Delay()
             {
+                UIManager.instance.gamePanel.firebar.SetActive(false);
+                UIManager.instance.gamePanel.img.SetActive(false);
                 transform.DOMoveX(0, 0.5f).SetEase(Ease.Linear);
                 yield return new WaitForSeconds(0.7f);
                 transform.GetChild(0).GetComponentInChildren<Animator>().SetFloat("SK1", 3f);
