@@ -30,6 +30,11 @@ namespace EKTemplate
         }
         #endregion
 
+        private void Start()
+        {
+            GameAnalyticsSDK.GameAnalytics.Initialize();
+        }
+
         private void GetDependencies()
         {
             if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer || level == -1) level = DataManager.instance.level;

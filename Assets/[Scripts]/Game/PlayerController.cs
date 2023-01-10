@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public Transform MidPlayer;
     public float runSpeed = 10f;
     public Material hairRed,hairblue;
-    public Material ayakkabired,ayakkabýblue;
+    public Material ayakkabired,ayakkabiblue;
     public Material omuzlukred,omuzlukblue;
     public Material pantolonred,pantolonblue;
     public Material pelerinred,pelerinblue;
